@@ -23,25 +23,25 @@ router.get("/", (req, res)=>{
     res.render("index", {groceryList});
 })
 
-router.get("/cart", (req, res)=>{
+router.get("/shopping/cart", (req, res)=>{
     const { cart } = req.session;
     if(!cart){
         res.send("you have no existing carts")
     }else
     res.send(req.session);
 })
-router.post("/cart/item", (req, res)=>{
+router.post("/shopping/cart/item", (req, res)=>{
     const {item, quantity} = req.body;
     const cartItem = {item, quantity}
     const { cart } = req.session;
     if(cart){
-        req.session.cart.item.push(cartItem)  
+        req.session.cart.items.push(cartItem)  
     }else{
         req.session.cart = {
             items: [cartItem],
         }
     }
-    res.send(200)
+    res.send(req.session)
 });
 
 router.get("/:name", (req, res)=>{
