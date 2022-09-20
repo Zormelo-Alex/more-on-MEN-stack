@@ -8,8 +8,12 @@
 </head>
 <body>
     <% groceryList.forEach((good)=>{ %>
-        <%= good.item %> 
-        <%= good.quantity %> 
+        <ul>
+            <li> 
+                <%= good.item %> 
+                <%= good.quantity %> 
+            </li>
+        </ul>
     <% }) %> 
 
     <form action="/" method="post">

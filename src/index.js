@@ -2,8 +2,12 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const session = require("express-session")
+const authRoute = require("./routes/auth")
 const groceriesRoute = require("./routes/groceries")
 const marketRoute = require("./routes/markets")
+require("./database/index");
+
+
 
 
 app.use(express.urlencoded())
@@ -14,6 +18,17 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+//calling the auth route before the middleware so it doesn't conflict
+
+app.use(authRoute);
+
+
+
+app.use((req, res, next)=>{
+    if(req.session.user) next();
+    else res.send(401);
+})
 
 
 

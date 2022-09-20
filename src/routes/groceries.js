@@ -3,23 +3,20 @@ const router = Router();
 
 var groceryList = [
     {item:"Mangoes", 
-     quatity: 18
+     quantity: 18
     },
     {item:"Tomatoes",
-     quatity: 12
+     quantity: 12
     },
     {item:"Banana",
-     quatity: 14
+     quantity: 14
     },
     {item:"Pawpaw",
-     quatity: 58
+     quantity: 58
     }
 ];
 
 router.get("/", (req, res)=>{
-    // res.cookie("visited", true, {
-    //     maxAge: 60000,
-    // })
     res.render("index", {groceryList});
 })
 
@@ -28,7 +25,7 @@ router.get("/shopping/cart", (req, res)=>{
     if(!cart){
         res.send("you have no existing carts")
     }else
-    res.send(req.session);
+    res.send(req.session.cart);
 })
 router.post("/shopping/cart/item", (req, res)=>{
     const {item, quantity} = req.body;
