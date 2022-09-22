@@ -6,19 +6,20 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     password: {
-        type: mongoose.SchemaType.String,
+        type: mongoose.SchemaTypes.String,
         required: true
     },
     email: {
-        type: mongoose.SchemaType.String,
+        type: mongoose.SchemaTypes.String,
         required:true
     },
     createdAt: {
-        type: mongoose.SchemaType.Date,
+        type: mongoose.SchemaTypes.Date,
         required: true,
         default: new Date(),
     }
  });
+ 
 const User = mongoose.model("User", userSchema);
 
 
