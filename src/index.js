@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
-const session = require("express-session")
+const session = require("express-session");
+const mongoStore = require("connect-mongo")
 const passport = require("passport")
 require("./strategy/local")
 
@@ -11,7 +12,7 @@ const marketRoute = require("./routes/markets")
 require("./database/index");
 
 //creating a session memory store so user wont be logged out once server restarts
-const memoryStore = new session.MemoryStore()
+//const memoryStore = new session.MemoryStore()
 
 
 app.use(express.urlencoded())
@@ -21,7 +22,9 @@ app.use(session({
     secret: "DOM",
     resave: false,
     saveUninitialized: false,
-    store: memoryStore,
+    store: mongoStore.create({
+        mongoUrl: "mongodb://localhost:27017/shop"
+    }),
 }));
 
 //calling the auth route before the middleware so it doesn't conflict
@@ -34,8 +37,6 @@ app.use(session({
 app.use((req, res, next)=>{
     //logging the request method and url (get:/grocery)
     console.log(`${req.method} : ${req.url}`);
-    //logging the memorystore
-    console.log(memoryStore)
     next();
 })
 
