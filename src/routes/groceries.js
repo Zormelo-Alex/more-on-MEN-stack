@@ -16,8 +16,18 @@ var groceryList = [
     }
 ];
 
+//some sort of validation middleware befor user is allowed to acces any route
+router.use((req, res, next)=>{
+    //passport creates a req object once logged in
+    //the req.user data is from the deserialized user object
+    if(req.user) next();
+    else res.send(401);
+})
+
 router.get("/", (req, res)=>{
-    res.render("index", {groceryList});
+    //passport also modifies the session with a user object which stores the id since thats what we stored there in the strategy
+    //var id = req.session.passport.user;
+    res.render("index", {groceryList})
 })
 
 router.get("/shopping/cart", (req, res)=>{
